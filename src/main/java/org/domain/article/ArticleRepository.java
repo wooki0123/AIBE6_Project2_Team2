@@ -15,7 +15,20 @@ public class ArticleRepository {
         return article;
     }
 
+    public void delete(Article article) {
+        articleList.remove(article);
+    }
+
     public List<Article> findAll() {
         return articleList.reversed();
+    }
+
+    public Article findById(int id) {
+        for (Article article : articleList) {
+            if (article.getId() == id) {
+                return article;
+            }
+        }
+        return null;
     }
 }

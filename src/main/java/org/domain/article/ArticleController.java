@@ -59,6 +59,18 @@ public class ArticleController {
     }
 
     public void actionDelete(String cmd) {
+        String[] cmdBits = cmd.split(" ");
+        if (cmdBits.length < 2) {
+            System.out.println("명령어를 확인해주세요.");
+            return;
+        }
 
+        int articleId = Integer.parseInt(cmdBits[1]);
+
+        if (articleService.delete(articleId)) {
+            System.out.println("=> 게시글이 삭제되었습니다.");
+        } else {
+            System.out.println("해당 번호의 게시글이 존재하지 않습니다.");
+        }
     }
 }

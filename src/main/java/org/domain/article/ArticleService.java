@@ -20,4 +20,13 @@ public class ArticleService {
     public List<Article> findAll() {
         return articleRepository.findAll();
     }
+
+    public boolean delete(int id) {
+        Article article = articleRepository.findById(id);
+        if ( article == null ) {
+            return false;
+        }
+        articleRepository.delete(article);
+        return true;
+    }
 }
