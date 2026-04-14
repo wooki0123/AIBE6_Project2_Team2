@@ -8,11 +8,10 @@ public class Article {
     private String title;
     private String content;
     private LocalDateTime createDate;
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
-    public Article(int id, String title, String content) {
+    public Article(String title, String content) {
         LocalDateTime now = LocalDateTime.now();
-        this.id = id;
         this.title = title;
         this.content = content;
         this.createDate = now;
@@ -32,5 +31,17 @@ public class Article {
 
     public String getCreateDate() {
         return createDate.format(formatter);
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
     }
 }

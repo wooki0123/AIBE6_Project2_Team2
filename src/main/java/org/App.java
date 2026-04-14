@@ -3,19 +3,18 @@ package org;
 import org.domain.article.ArticleController;
 import org.domain.system.SystemController;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 public class App {
-    private int lastId = 0;
-    private int articleId = 0;
-    private List<Article> articleList = new ArrayList<>();
-    Scanner scanner = new Scanner(System.in);
-    SystemController systemController = new SystemController();
-    ArticleController articleController = new ArticleController(scanner);
+    private final Scanner scanner;
 
+    public App() {
+        this.scanner = AppContext.scanner;
+    }
     void run() {
+        SystemController systemController = AppContext.systemController;
+        ArticleController articleController = AppContext.articleController;
+
         System.out.println("프로그램 실행");
 
         while (true) {

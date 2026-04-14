@@ -1,18 +1,17 @@
 package org.domain.article;
 
+import org.AppContext;
 import org.Article;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 public class ArticleController {
     private final Scanner scanner;
-    private int lastId = 0;
-    private List<Article> articleList = new ArrayList<>();;
+    private final ArticleService articleService;
 
     public ArticleController(Scanner scanner) {
         this.scanner = scanner;
+        this.articleService = AppContext.articleService;
     }
 
     public void actionWrite() {
@@ -21,11 +20,7 @@ public class ArticleController {
         System.out.print("내용: ");
         String content = scanner.nextLine().trim();
 
-        ++lastId;
-
-        Article article = new Article(lastId, title, content);
-
-        articleList.add(article);
+        articleService.write(title, content);
 
         System.out.println("=> 게시글이 등록되었습니다.");
     }
@@ -33,8 +28,7 @@ public class ArticleController {
     public void actionList() {
         System.out.println("번호 | 제목       | 등록일");
         System.out.println("-----------------------------");
-        for (int i = articleList.size() - 1; i >= 0; i--) {
-            Article article = articleList.get(i);
+        for (Article article : articleService.findAll()) {
             System.out.println("%d | %s | %s".formatted(article.getId(), article.getTitle(), article.getCreateDate()));
         }
     }
@@ -47,18 +41,16 @@ public class ArticleController {
         }
 
         int articleId = Integer.parseInt(cmdBits[1]);
-        for (Article article : articleList) {
+        for (Article article : articleService.findAll()) {
             if (article.getId() == articleId) {
                 System.out.println("번호: %d".formatted(article.getId()));
                 System.out.println("제목: %s".formatted(article.getTitle()));
                 System.out.println("내용: %s".formatted(article.getContent()));
                 System.out.println("등록일: %s".formatted(article.getCreateDate()));
                 return;
-            } else {
-                System.out.println("해당 번호의 게시글이 존재하지 않습니다.");
-                return;
             }
         }
+        System.out.println("해당 번호의 게시글이 존재하지 않습니다.");
 
     }
 
