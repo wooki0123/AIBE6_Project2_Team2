@@ -1,5 +1,7 @@
 package org;
 
+import org.domain.system.SystemController;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -8,7 +10,8 @@ public class App {
     private int lastId = 0;
     private int articleId = 0;
     private List<Article> articleList = new ArrayList<>();
-    Scanner scanner = new Scanner(System.in);;
+    Scanner scanner = new Scanner(System.in);
+    SystemController systemController = new SystemController();
 
     void run() {
         System.out.println("프로그램 실행");
@@ -26,7 +29,7 @@ public class App {
                 case "update" -> actionUpdate(cmd);
                 case "delete" -> actionDelete(cmd);
                 case "exit" -> {
-                    System.out.println("프로그램을 종료합니다.");
+                    systemController.actionExit();
                     return;
                 }
 
