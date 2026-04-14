@@ -4,21 +4,22 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class Article {
-    private int lastid = 0;
+    private int id;
     private String title;
     private String content;
     private LocalDateTime createDate;
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
-    Article(String title, String content) {
+    public Article(int id, String title, String content) {
         LocalDateTime now = LocalDateTime.now();
+        this.id = id;
         this.title = title;
         this.content = content;
         this.createDate = now;
     }
 
     public int getId() {
-        return ++lastid;
+        return id;
     }
 
     public String getTitle() {

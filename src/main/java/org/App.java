@@ -6,6 +6,7 @@ import java.util.Scanner;
 
 public class App {
     private int lastId = 0;
+    private int articleId = 0;
     private List<Article> articleList = new ArrayList<>();
     Scanner scanner = new Scanner(System.in);;
 
@@ -19,24 +20,16 @@ public class App {
             String actionName = cmdBits[0];
 
             switch (actionName) {
-                case "write":
-                    actionWrite();
-                    break;
-                case "list":
-                    actionList();
-                    break;
-                case "detail":
-                    actionDetail(cmd);
-                    break;
-                case "update":
-                    actionUpdate(cmd);
-                    break;
-                case "delete":
-                    actionDelete(cmd);
-                    break;
-                case "exit":
+                case "write" -> actionWrite();
+                case "list" -> actionList();
+                case "detail" -> actionDetail(cmd);
+                case "update" -> actionUpdate(cmd);
+                case "delete" -> actionDelete(cmd);
+                case "exit" -> {
                     System.out.println("프로그램을 종료합니다.");
                     return;
+                }
+
             }
         }
     }
@@ -47,7 +40,10 @@ public class App {
         System.out.print("내용: ");
         String content = scanner.nextLine().trim();
 
-        Article article = new Article(title, content);
+        ++lastId;
+
+        Article article = new Article(lastId, title, content);
+
         articleList.add(article);
 
         System.out.println("=> 게시글이 등록되었습니다.");
@@ -63,6 +59,25 @@ public class App {
     }
 
     void actionDetail(String cmd) {
+        String[] cmdBits = cmd.split(" ");
+        if (cmdBits.length < 2) {
+            System.out.println("명령어를 확인해주세요.");
+            return;
+        }
+
+        int articleId = Integer.parseInt(cmdBits[1]);
+        for (Article article : articleList) {
+            if (article.getId() == articleId) {
+                System.out.println("번호: %d".formatted(article.getId()));
+                System.out.println("제목: %s".formatted(article.getTitle()));
+                System.out.println("내용: %s".formatted(article.getContent()));
+                System.out.println("등록일: %s".formatted(article.getCreateDate()));
+                return;
+            } else {
+                System.out.println("해당 번호의 게시글이 존재하지 않습니다.");
+                return;
+            }
+        }
 
     }
 
