@@ -55,7 +55,32 @@ public class ArticleController {
     }
 
     public void actionUpdate(String cmd) {
+        String[] cmdBits = cmd.split(" ");
+        if (cmdBits.length < 2) {
+            System.out.println("명령어를 확인해주세요.");
+            return;
+        }
 
+        int articleId = Integer.parseInt(cmdBits[1]);
+        Article article = articleService.findAll().stream()
+                .filter(a -> a.getId() == articleId)
+                .findFirst()
+                .orElse(null);
+
+        if (article == null) {
+            System.out.println("해당 번호의 게시글이 존재하지 않습니다.");
+            return;
+        }
+
+        System.out.print("제목 (현재: %s): ".formatted(article.getTitle()));
+        String title = scanner.nextLine().trim();
+        System.out.print("내용 (현재: %s): ".formatted(article.getContent()));
+        String content = scanner.nextLine().trim();
+
+        article.setTitle(title);
+        article.setContent(content);
+
+        System.out.println("=> 게시글이 수정되었습니다.");
     }
 
     public void actionDelete(String cmd) {
