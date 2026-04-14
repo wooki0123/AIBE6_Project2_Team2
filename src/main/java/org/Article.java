@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class Article {
-    private int id;
+    private int lastid = 0;
     private String title;
     private String content;
     private LocalDateTime createDate;
@@ -18,7 +18,7 @@ public class Article {
     }
 
     public int getId() {
-        return id;
+        return ++lastid;
     }
 
     public String getTitle() {

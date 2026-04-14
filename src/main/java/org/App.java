@@ -14,26 +14,29 @@ public class App {
 
         while (true) {
             System.out.print("명령어: ");
-            String cmd = scanner.nextLine().trim();
-            switch (cmd) {
+            String cmd  = scanner.nextLine().trim();
+            String[] cmdBits = cmd.split(" ");
+            String actionName = cmdBits[0];
+
+            switch (actionName) {
                 case "write":
                     actionWrite();
                     break;
                 case "list":
                     actionList();
                     break;
-//                case "detail" + lastId:
-//                    actionDetail(lastId);
-//                    break;
+                case "detail":
+                    actionDetail(cmd);
+                    break;
                 case "update":
+                    actionUpdate(cmd);
                     break;
                 case "delete":
+                    actionDelete(cmd);
                     break;
                 case "exit":
                     System.out.println("프로그램을 종료합니다.");
                     return;
-                default:
-                    System.out.println("알 수 없는 명령어입니다.");
             }
         }
     }
@@ -59,13 +62,15 @@ public class App {
         }
     }
 
-    void actionDetail(int id) {
+    void actionDetail(String cmd) {
 
-            Article article = articleList.get(id);
-            System.out.println("번호: %d".formatted(article.getId()));
-            System.out.println("제목: %s".formatted(article.getTitle()));
-            System.out.println("내용: %s".formatted(article.getContent()));
-            System.out.println("등록일: %s".formatted(article.getCreateDate()));
+    }
+
+    void actionUpdate(String cmd) {
+
+    }
+
+    void actionDelete(String cmd) {
 
     }
 }
