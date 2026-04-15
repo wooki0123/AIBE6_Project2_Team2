@@ -39,7 +39,14 @@ public class ArticleController {
             return;
         }
 
-        int articleId = Integer.parseInt(cmdBits[1]);
+        int articleId;
+        try {
+            articleId = Integer.parseInt(cmdBits[1]);
+        } catch (NumberFormatException e) {
+            System.out.println("올바른 숫자를 입력해주세요.");
+            return;
+        }
+
         Article article = articleService.findById(articleId);
 
         if (article == null) {
@@ -61,7 +68,14 @@ public class ArticleController {
             return;
         }
 
-        int articleId = Integer.parseInt(cmdBits[1]);
+        int articleId;
+        try {
+            articleId = Integer.parseInt(cmdBits[1]);
+        } catch (NumberFormatException e) {
+            System.out.println("올바른 숫자를 입력해주세요.");
+            return;
+        }
+
         Article article = articleService.findById(articleId);
 
         if (article == null) {
@@ -87,7 +101,13 @@ public class ArticleController {
             return;
         }
 
-        int articleId = Integer.parseInt(cmdBits[1]);
+        int articleId;
+        try {
+            articleId = Integer.parseInt(cmdBits[1]);
+        } catch (NumberFormatException e) {
+            System.out.println("올바른 숫자를 입력해주세요.");
+            return;
+        }
 
         if (articleService.delete(articleId)) {
             System.out.println("=> 게시글이 삭제되었습니다.");

@@ -26,7 +26,7 @@ public class ArticleService {
 
     public boolean delete(int id) {
         Article article = articleRepository.findById(id);
-        if ( article == null ) {
+        if (article == null) {
             return false;
         }
         articleRepository.delete(article);
