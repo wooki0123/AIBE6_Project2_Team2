@@ -17,8 +17,8 @@ public class AppContext {
     static {
         scanner = new Scanner(System.in);
         articleRepository = new ArticleRepository();
-        articleService = new ArticleService();
-        articleController = new ArticleController(scanner);
+        articleService = new ArticleService(articleRepository);
+        articleController = new ArticleController(scanner, articleService);
         systemController = new SystemController();
     }
 }

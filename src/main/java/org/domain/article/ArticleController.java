@@ -1,6 +1,5 @@
 package org.domain.article;
 
-import org.AppContext;
 import org.Article;
 
 import java.util.Scanner;
@@ -9,9 +8,9 @@ public class ArticleController {
     private final Scanner scanner;
     private final ArticleService articleService;
 
-    public ArticleController(Scanner scanner) {
+    public ArticleController(Scanner scanner, ArticleService articleService) {
         this.scanner = scanner;
-        this.articleService = AppContext.articleService;
+        this.articleService = articleService;
     }
 
     public void actionWrite() {
@@ -41,16 +40,17 @@ public class ArticleController {
         }
 
         int articleId = Integer.parseInt(cmdBits[1]);
-        for (Article article : articleService.findAll()) {
-            if (article.getId() == articleId) {
-                System.out.println("번호: %d".formatted(article.getId()));
-                System.out.println("제목: %s".formatted(article.getTitle()));
-                System.out.println("내용: %s".formatted(article.getContent()));
-                System.out.println("등록일: %s".formatted(article.getCreateDate()));
-                return;
-            }
+        Article article = articleService.findById(articleId);
+
+        if (article == null) {
+            System.out.println("해당 번호의 게시글이 존재하지 않습니다.");
+            return;
         }
-        System.out.println("해당 번호의 게시글이 존재하지 않습니다.");
+
+        System.out.println("번호: %d".formatted(article.getId()));
+        System.out.println("제목: %s".formatted(article.getTitle()));
+        System.out.println("내용: %s".formatted(article.getContent()));
+        System.out.println("등록일: %s".formatted(article.getCreateDate()));
 
     }
 
@@ -62,10 +62,7 @@ public class ArticleController {
         }
 
         int articleId = Integer.parseInt(cmdBits[1]);
-        Article article = articleService.findAll().stream()
-                .filter(a -> a.getId() == articleId)
-                .findFirst()
-                .orElse(null);
+        Article article = articleService.findById(articleId);
 
         if (article == null) {
             System.out.println("해당 번호의 게시글이 존재하지 않습니다.");

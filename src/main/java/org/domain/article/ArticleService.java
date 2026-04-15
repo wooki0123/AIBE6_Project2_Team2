@@ -1,6 +1,5 @@
 package org.domain.article;
 
-import org.AppContext;
 import org.Article;
 
 import java.util.List;
@@ -8,8 +7,8 @@ import java.util.List;
 public class ArticleService {
     private final ArticleRepository articleRepository;
 
-    public ArticleService() {
-         articleRepository = AppContext.articleRepository;
+    public ArticleService(ArticleRepository articleRepository) {
+        this.articleRepository = articleRepository;
     }
 
     public void write(String title, String content) {
@@ -19,6 +18,10 @@ public class ArticleService {
 
     public List<Article> findAll() {
         return articleRepository.findAll();
+    }
+
+    public Article findById(int id) {
+        return articleRepository.findById(id);
     }
 
     public boolean delete(int id) {
