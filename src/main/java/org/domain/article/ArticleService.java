@@ -28,6 +28,15 @@ public class ArticleService {
         return articleRepository.findByKeyword(keyword);
     }
 
+    public boolean update(int id, String title, String content) {
+        Article article = articleRepository.findById(id);
+        if (article == null) return false;
+        article.setTitle(title);
+        article.setContent(content);
+        articleRepository.update(article);
+        return true;
+    }
+
     public boolean delete(int id) {
         Article article = articleRepository.findById(id);
         if (article == null) {

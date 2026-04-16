@@ -1,6 +1,7 @@
 package org;
 
 import org.domain.article.ArticleController;
+import org.domain.article.ArticleFileRepository;
 import org.domain.article.ArticleRepository;
 import org.domain.article.ArticleService;
 import org.domain.system.SystemController;
@@ -16,7 +17,7 @@ public class AppContext {
 
     static {
         scanner = new Scanner(System.in);
-        articleRepository = new ArticleRepository();
+        articleRepository = new ArticleFileRepository();
         articleService = new ArticleService(articleRepository);
         articleController = new ArticleController(scanner, articleService);
         systemController = new SystemController();

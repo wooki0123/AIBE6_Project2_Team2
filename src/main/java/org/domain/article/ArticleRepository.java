@@ -32,6 +32,10 @@ public class ArticleRepository {
         return null;
     }
 
+    public Article update(Article article) {
+        return article;
+    }
+
     public List<Article> findByKeyword(String keyword) {
         return articleList.reversed().stream()
                 .filter(a -> a.getTitle().contains(keyword) || a.getContent().contains(keyword))

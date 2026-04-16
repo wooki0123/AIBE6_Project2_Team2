@@ -84,8 +84,7 @@ public class ArticleController {
         System.out.print("내용 (현재: %s): ".formatted(article.getContent()));
         String content = scanner.nextLine().trim();
 
-        article.setTitle(title);
-        article.setContent(content);
+        articleService.update(articleId, title, content);
 
         System.out.println("=> 게시글이 수정되었습니다.");
     }
