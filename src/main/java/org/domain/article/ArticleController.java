@@ -1,7 +1,9 @@
 package org.domain.article;
 
 import org.Article;
+import org.Rq;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class ArticleController {
@@ -32,17 +34,14 @@ public class ArticleController {
         }
     }
 
-    public void actionDetail(String cmd) {
-        String[] cmdBits = cmd.split(" ");
-        if (cmdBits.length < 2) {
+    public void actionDetail(Rq rq) {
+        if (!rq.hasArg()) {
             System.out.println("명령어를 확인해주세요.");
             return;
         }
 
-        int articleId;
-        try {
-            articleId = Integer.parseInt(cmdBits[1]);
-        } catch (NumberFormatException e) {
+        int articleId = rq.getArgAsInt();
+        if (articleId == -1) {
             System.out.println("올바른 숫자를 입력해주세요.");
             return;
         }
@@ -61,17 +60,14 @@ public class ArticleController {
 
     }
 
-    public void actionUpdate(String cmd) {
-        String[] cmdBits = cmd.split(" ");
-        if (cmdBits.length < 2) {
+    public void actionUpdate(Rq rq) {
+        if (!rq.hasArg()) {
             System.out.println("명령어를 확인해주세요.");
             return;
         }
 
-        int articleId;
-        try {
-            articleId = Integer.parseInt(cmdBits[1]);
-        } catch (NumberFormatException e) {
+        int articleId = rq.getArgAsInt();
+        if (articleId == -1) {
             System.out.println("올바른 숫자를 입력해주세요.");
             return;
         }
@@ -94,16 +90,38 @@ public class ArticleController {
         System.out.println("=> 게시글이 수정되었습니다.");
     }
 
-    public void actionDelete(String cmd) {
-        String[] cmdBits = cmd.split(" ");
-        if (cmdBits.length < 2) {
+    public void actionSearch(Rq rq) {
+        if (!rq.hasArg()) {
             System.out.println("명령어를 확인해주세요.");
             return;
         }
+        String keyword = rq.getArg();
+        List<Article> results = articleService.search(keyword);
 
-        int articleId;
+        if (results.isEmpty()) {
+            System.out.println("검색 결과가 없습니다.");
+            return;
+        }
+
+        System.out.println("번호 | 제목       | 등록일");
+        System.out.println("-----------------------------");
+        for (Article article : results) {
+            System.out.println("%d | %s | %s".formatted(article.getId(), article.getTitle(), article.getCreateDate()));
+        }
+    }
+
+    public void actionDelete(Rq rq) {
+        if (!rq.hasArg()) {
+            System.out.println("명령어를 확인해주세요.");
+            return;
+        }
+        int articleId = rq.getArgAsInt();
+        if (articleId == -1) {
+            System.out.println("올바른 숫자를 입력해주세요.");
+            return;
+        }
         try {
-            articleId = Integer.parseInt(cmdBits[1]);
+            articleId = Integer.parseInt(rq.getArg());
         } catch (NumberFormatException e) {
             System.out.println("올바른 숫자를 입력해주세요.");
             return;

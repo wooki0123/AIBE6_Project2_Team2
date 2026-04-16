@@ -8,6 +8,7 @@ import java.util.Scanner;
 public class App {
     private final Scanner scanner;
 
+
     public App() {
         this.scanner = AppContext.scanner;
     }
@@ -20,20 +21,20 @@ public class App {
         while (true) {
             System.out.print("명령어: ");
             String cmd  = scanner.nextLine().trim();
-            String[] cmdBits = cmd.split(" ");
-            String actionName = cmdBits[0];
+            Rq rq = new Rq(cmd);
 
-            switch (actionName) {
+            switch (rq.getActionName()) {
                 case "write" -> articleController.actionWrite();
                 case "list" -> articleController.actionList();
-                case "detail" -> articleController.actionDetail(cmd);
-                case "update" -> articleController.actionUpdate(cmd);
-                case "delete" -> articleController.actionDelete(cmd);
+                case "detail" -> articleController.actionDetail(rq);
+                case "update" -> articleController.actionUpdate(rq);
+                case "delete" -> articleController.actionDelete(rq);
+                case "search" -> articleController.actionSearch(rq);
                 case "exit" -> {
                     systemController.actionExit();
                     return;
                 }
-                default -> System.out.println("알 수 없는 명령어입니다: " + actionName);
+                default -> System.out.println("알 수 없는 명령어입니다: " + rq.getActionName());
             }
         }
     }

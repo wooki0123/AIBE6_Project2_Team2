@@ -24,6 +24,10 @@ public class ArticleService {
         return articleRepository.findById(id);
     }
 
+    public List<Article> search(String keyword) {
+        return articleRepository.findByKeyword(keyword);
+    }
+
     public boolean delete(int id) {
         Article article = articleRepository.findById(id);
         if (article == null) {
